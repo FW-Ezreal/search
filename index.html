@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百度搜索框</title>
+    <style>
+        *{  
+            padding: 0;
+            margin: 0;
+            text-decoration: none;
+            list-style: none ;
+        }
+        #w{
+            margin: 20px 50px;
+        }
+        .wrapper{
+            display: none; 
+            width: 302px;
+            border: 1px solid black;
+            box-sizing: border-box;
+            border-top-width: 0;
+        }
+        input{
+            width: 300px;
+            height: 40px;
+            border: 1px solid black;
+            font-size: 20px;
+        }
+        ul li{
+            padding: 0px 5px 0px 0px;
+            line-height: 40px;
+            height: 40px; 
+        }
+        li:hover{
+            background-color: #ccc;
+            color: #fff;
+        }
+        a{
+            margin-left: 5px;
+            color: #333
+        }
+
+
+
+    </style>
+</head>
+<body>
+     <div id="w"> 
+        <input type="text">
+        <div class="wrapper">
+            <ul>
+                
+            </ul>
+        </div>
+     </div> 
+    <script>
+        var oInput = document.getElementsByTagName("input")[0];
+        var oUl = document.getElementsByTagName('ul')[0];
+        var wrap = document.getElementsByClassName('wrapper')[0];
+        var lastSrc = null
+        oInput.onkeyup = function(){
+            lastSrc == null?"":document.body.removeChild(lastSrc);
+            var val = oInput.value;
+            var script = document.createElement("script");
+            script.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=' + oInput.value+ "&cb=cbfn";
+            document.body.appendChild(script); 
+            lastSrc = script;           
+        }
+        function cbfn(data){
+            var value = data.s;
+            var html = "";
+            var len = value.length;
+            if(oInput.value != ""){
+                wrap.style.display = "block"
+            }
+            if(len >= 4){
+                for(var i = 0; i < 4; i++){
+                    html += '<li><a href=https://www.baidu.com/s?wd='+ value[i] +'>'+ value[i] +'</a></li>'
+                }                
+            }else{
+                for(var i = 0; i < len; i++){
+                    html += '<li><a href=https://www.baidu.com/s?wd='+ value[i] +'>'+ value[i] +'</a></li>'
+                }                  
+            }
+
+            oUl.innerHTML = html;
+        }
+    </script>
+
+</body>
+</html>
